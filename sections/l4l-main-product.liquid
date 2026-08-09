@@ -38,12 +38,20 @@
     </p>
     <h1 class="l4l-product__title">{{ product.title }}</h1>
 
-    {%- comment %} Star rating placeholder - swap for your reviews app snippet once installed {% endcomment %}
+    {%- comment %} Star rating placeholder - remove show_rating_placeholder setting once your reviews app block below is showing real ratings {% endcomment %}
     {%- if section.settings.show_rating_placeholder -%}
       <div class="l4l-product__rating-placeholder">
         <span class="l4l-product__rating-note">{{ section.settings.rating_placeholder_text | default: 'Reviews coming soon' }}</span>
       </div>
     {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        <div class="l4l-product__app-block" {{ block.shopify_attributes }}>
+          {% render block %}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
 
     {%- if product.description != blank -%}
       <p class="l4l-product__teaser">{{ product.description | strip_html | truncatewords: 28 }}</p>
@@ -524,6 +532,9 @@
     { "type": "text", "id": "rating_placeholder_text", "label": "Rating placeholder text", "default": "Reviews coming soon" },
     { "type": "text", "id": "shipping_note", "label": "Shipping/format note", "default": "Digital formats deliver instantly. Print formats ship in 2-3 business days." },
     { "type": "text", "id": "license_note", "label": "License note", "default": "Licensed for single classroom or family use." }
+  ],
+  "blocks": [
+    { "type": "@app" }
   ],
   "presets": [
     { "name": "L4L Product page" }

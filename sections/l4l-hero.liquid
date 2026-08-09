@@ -1,5 +1,5 @@
 <div class="l4l-hero color-{{ section.settings.color_scheme }}">
-  <div class="l4l-hero__inner page-width">
+  <div class="l4l-hero__inner page-width{% if section.settings.image == blank %} l4l-hero__inner--centered{% endif %}">
     <div class="l4l-hero__content">
       {%- if section.settings.eyebrow != blank -%}
         <p class="l4l-hero__eyebrow">{{ section.settings.eyebrow }}</p>
@@ -31,7 +31,7 @@
       {%- for block in section.blocks -%}
         <div class="l4l-hero__trust-item" {{ block.shopify_attributes }}>
           {%- if block.settings.icon != blank -%}
-            <span class="l4l-hero__trust-icon">{{ block.settings.icon }}</span>
+            <span class="l4l-hero__trust-icon l4l-hero__trust-icon--{{ forloop.index | modulo: 3 }}">{{ block.settings.icon }}</span>
           {%- endif -%}
           <div>
             <p class="l4l-hero__trust-title">{{ block.settings.title }}</p>
@@ -47,29 +47,45 @@
   .l4l-hero__inner {
     display: grid;
     grid-template-columns: 1.1fr 1fr;
-    gap: 3rem;
+    gap: 4rem;
     align-items: center;
-    padding: 4rem 0 3rem;
+    padding: 5.5rem 0 3.5rem;
+  }
+  .l4l-hero__inner--centered {
+    grid-template-columns: 1fr;
+    max-width: 74rem;
+    margin: 0 auto;
+    text-align: center;
+    padding: 6.5rem 0 4rem;
+  }
+  .l4l-hero__inner--centered .l4l-hero__subheading {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .l4l-hero__inner--centered .l4l-hero__buttons {
+    justify-content: center;
   }
   .l4l-hero__eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: 1.2rem;
     font-weight: 600;
-    color: rgb(var(--color-foreground-accent, var(--color-foreground)));
-    margin: 0 0 0.75rem;
+    color: #0F6E56;
+    margin: 0 0 1rem;
   }
   .l4l-hero__heading {
-    font-size: 4.4rem;
-    line-height: 1.1;
-    margin: 0 0 1.2rem;
+    font-size: 4.8rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+    margin: 0 0 1.4rem;
   }
   .l4l-hero__subheading {
-    font-size: 1.7rem;
-    line-height: 1.5;
+    font-size: 1.8rem;
+    line-height: 1.55;
     max-width: 46rem;
-    opacity: 0.85;
-    margin: 0 0 2rem;
+    opacity: 0.7;
+    margin: 0 0 2.4rem;
   }
   .l4l-hero__buttons {
     display: flex;
@@ -84,36 +100,59 @@
   }
   .l4l-hero__trust {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    padding: 0 0 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    padding: 0 0 4.5rem;
   }
   .l4l-hero__trust-item {
     display: flex;
-    gap: 1rem;
-    align-items: flex-start;
+    gap: 1.2rem;
+    align-items: center;
   }
   .l4l-hero__trust-icon {
-    font-size: 2.2rem;
-    line-height: 1;
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+  .l4l-hero__trust-icon--1 {
+    background: #E1F5EE;
+    color: #085041;
+  }
+  .l4l-hero__trust-icon--2 {
+    background: #FAEEDA;
+    color: #854F0B;
+  }
+  .l4l-hero__trust-icon--0 {
+    background: #E6F1FB;
+    color: #0C447C;
   }
   .l4l-hero__trust-title {
     font-weight: 600;
     margin: 0 0 0.2rem;
-    font-size: 1.4rem;
+    font-size: 1.45rem;
   }
   .l4l-hero__trust-text {
     font-size: 1.3rem;
-    opacity: 0.75;
+    opacity: 0.6;
     margin: 0;
   }
   @media screen and (max-width: 749px) {
-    .l4l-hero__inner {
+    .l4l-hero__inner,
+    .l4l-hero__inner--centered {
       grid-template-columns: 1fr;
-      padding: 2.5rem 0 2rem;
+      padding: 3rem 0 2rem;
+      text-align: left;
+    }
+    .l4l-hero__inner--centered .l4l-hero__buttons {
+      justify-content: flex-start;
     }
     .l4l-hero__heading {
-      font-size: 3rem;
+      font-size: 3.2rem;
     }
     .l4l-hero__image {
       order: -1;

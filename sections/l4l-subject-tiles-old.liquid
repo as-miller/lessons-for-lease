@@ -1,7 +1,6 @@
 <div class="l4l-subjects page-width">
   {%- if section.settings.heading != blank -%}
     <h2 class="l4l-subjects__heading">{{ section.settings.heading }}</h2>
-    <span class="l4l-subjects__accent"></span>
   {%- endif -%}
   {%- if section.settings.subheading != blank -%}
     <p class="l4l-subjects__subheading">{{ section.settings.subheading }}</p>
@@ -28,14 +27,6 @@
   .l4l-subjects__heading {
     font-size: 2.8rem;
     margin: 0 0 0.5rem;
-  }
-  .l4l-subjects__accent {
-    display: inline-block;
-    width: 5.6rem;
-    height: 0.4rem;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #C98A3E, #0B2545);
-    margin: 0 0 1.6rem;
   }
   .l4l-subjects__subheading {
     opacity: 0.7;

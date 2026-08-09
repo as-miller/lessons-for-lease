@@ -27,7 +27,7 @@
       }
     },
     "l4l_grade_tiles": {
-      "type": "l4l-grade-tiles",
+      "type": "l4l-grade-tiles-old",
       "blocks": {
         "grade_k": { "type": "grade", "settings": { "number": "K", "title": "Kindergarten", "subtitle": "Building strong foundations", "color": "#7A9B76" } },
         "grade_1": { "type": "grade", "settings": { "number": "1", "title": "Grade 1", "subtitle": "Building strong foundations", "color": "#3D8B8B" } },
@@ -43,7 +43,7 @@
       }
     },
     "l4l_subject_tiles": {
-      "type": "l4l-subject-tiles",
+      "type": "l4l-subject-tiles-old",
       "blocks": {
         "math": { "type": "subject", "settings": { "icon": "🔢", "title": "Math", "text": "Build confidence with engaging, standards-aligned math lessons", "color": "#0B2545" } },
         "ela": { "type": "subject", "settings": { "icon": "📖", "title": "ELA", "text": "Help students grow in reading, writing, and grammar", "color": "#0F6E56" } }

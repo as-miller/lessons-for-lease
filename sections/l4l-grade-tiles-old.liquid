@@ -2,7 +2,6 @@
   <div class="l4l-grades page-width">
     {%- if section.settings.heading != blank -%}
       <h2 class="l4l-grades__heading">{{ section.settings.heading }}</h2>
-      <span class="l4l-grades__accent"></span>
     {%- endif -%}
     {%- if section.settings.subheading != blank -%}
       <p class="l4l-grades__subheading">{{ section.settings.subheading }}</p>
@@ -23,15 +22,7 @@
 
 <style>
   .l4l-grades-wrap {
-    background: #F0F7F5;
-  }
-  .l4l-grades__accent {
-    display: inline-block;
-    width: 5.6rem;
-    height: 0.4rem;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #0F6E56, #C98A3E);
-    margin: 0 0 1.6rem;
+    background: #FAFAF8;
   }
   .l4l-grades {
     padding: 5rem 0;
@@ -60,12 +51,10 @@
     text-decoration: none;
     color: inherit;
     position: relative;
-    background: color-mix(in srgb, var(--grade-color) 4%, white);
-    transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+    transition: border-color 0.15s ease, transform 0.15s ease;
   }
   .l4l-grade-card:hover {
     border-color: var(--grade-color);
-    background: color-mix(in srgb, var(--grade-color) 8%, white);
     transform: translateY(-2px);
   }
   .l4l-grade-card__badge {
