@@ -1,0 +1,120 @@
+<div class="l4l-grades page-width">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="l4l-grades__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+  {%- if section.settings.subheading != blank -%}
+    <p class="l4l-grades__subheading">{{ section.settings.subheading }}</p>
+  {%- endif -%}
+
+  <div class="l4l-grades__grid">
+    {%- for block in section.blocks -%}
+      <a href="{{ block.settings.link }}" class="l4l-grade-card" style="--grade-color: {{ block.settings.color }};" {{ block.shopify_attributes }}>
+        <span class="l4l-grade-card__badge">{{ block.settings.number }}</span>
+        <p class="l4l-grade-card__title">{{ block.settings.title }}</p>
+        <p class="l4l-grade-card__subtitle">{{ block.settings.subtitle }}</p>
+        <span class="l4l-grade-card__cta">Explore →</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .l4l-grades {
+    padding: 3rem 0;
+    text-align: center;
+  }
+  .l4l-grades__heading {
+    font-size: 2.8rem;
+    margin: 0 0 0.5rem;
+  }
+  .l4l-grades__subheading {
+    opacity: 0.75;
+    font-size: 1.5rem;
+    margin: 0 0 2.5rem;
+  }
+  .l4l-grades__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+  }
+  .l4l-grade-card {
+    display: block;
+    text-align: left;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 1.2rem;
+    padding: 1.6rem;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .l4l-grade-card:hover {
+    border-color: var(--grade-color);
+    transform: translateY(-2px);
+  }
+  .l4l-grade-card__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    background: var(--grade-color);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+  .l4l-grade-card__title {
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin: 0 0 0.3rem;
+  }
+  .l4l-grade-card__subtitle {
+    font-size: 1.3rem;
+    opacity: 0.7;
+    margin: 0 0 1.2rem;
+  }
+  .l4l-grade-card__cta {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--grade-color);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "L4L Grade tiles",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Browse by grade" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Curated lessons for every stage of your child's learning journey" }
+  ],
+  "blocks": [
+    {
+      "type": "grade",
+      "name": "Grade",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Grade number/label", "default": "K" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Kindergarten" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Building strong foundations" },
+        { "type": "color", "id": "color", "label": "Grade color", "default": "#7A9B76" },
+        { "type": "url", "id": "link", "label": "Collection link" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "L4L Grade tiles",
+      "blocks": [
+        { "type": "grade", "settings": { "number": "K", "title": "Kindergarten", "subtitle": "Building strong foundations", "color": "#7A9B76" } },
+        { "type": "grade", "settings": { "number": "1", "title": "Grade 1", "subtitle": "Building strong foundations", "color": "#3D8B8B" } },
+        { "type": "grade", "settings": { "number": "2", "title": "Grade 2", "subtitle": "Growing confident learners", "color": "#4A6FA5" } },
+        { "type": "grade", "settings": { "number": "3", "title": "Grade 3", "subtitle": "Mastering key concepts", "color": "#C98A3E" } },
+        { "type": "grade", "settings": { "number": "4", "title": "Grade 4", "subtitle": "Preparing for success", "color": "#C15B4A" } },
+        { "type": "grade", "settings": { "number": "5", "title": "Grade 5", "subtitle": "Building bright futures", "color": "#7D5A8C" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

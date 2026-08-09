@@ -1,0 +1,166 @@
+<div class="l4l-featured page-width">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="l4l-featured__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  <div class="l4l-featured__grid">
+    {%- for block in section.blocks -%}
+      {%- assign product = block.settings.product -%}
+      <a href="{{ product.url | default: '#' }}" class="l4l-featured-card" {{ block.shopify_attributes }}>
+        <div class="l4l-featured-card__image">
+          {%- if product.featured_image != blank -%}
+            {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy' }}
+          {%- else -%}
+            <div class="l4l-featured-card__placeholder"></div>
+          {%- endif -%}
+          {%- if block.settings.ribbon != blank -%}
+            <span class="l4l-featured-card__ribbon">{{ block.settings.ribbon }}</span>
+          {%- endif -%}
+        </div>
+        <div class="l4l-featured-card__body">
+          {%- if block.settings.grade_label != blank or block.settings.format_label != blank -%}
+            <div class="l4l-featured-card__badges">
+              {%- if block.settings.grade_label != blank -%}
+                <span class="l4l-featured-card__badge" style="--badge-color: {{ block.settings.grade_color }};">{{ block.settings.grade_label }}</span>
+              {%- endif -%}
+              {%- if block.settings.format_label != blank -%}
+                <span class="l4l-featured-card__badge l4l-featured-card__badge--format">{{ block.settings.format_label }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          <p class="l4l-featured-card__title">{{ product.title | default: block.settings.title_fallback }}</p>
+          {%- if product.price != blank -%}
+            <p class="l4l-featured-card__price">{{ product.price | money }}</p>
+          {%- endif -%}
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+
+  {%- if section.settings.view_all_link != blank -%}
+    <div class="l4l-featured__cta">
+      <a href="{{ section.settings.view_all_link }}" class="button button--secondary">{{ section.settings.view_all_label | default: 'View all resources' }}</a>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .l4l-featured {
+    padding: 3rem 0;
+  }
+  .l4l-featured__heading {
+    text-align: center;
+    font-size: 2.6rem;
+    margin: 0 0 2.5rem;
+  }
+  .l4l-featured__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .l4l-featured-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 1.2rem;
+    overflow: hidden;
+  }
+  .l4l-featured-card__image {
+    position: relative;
+    background: rgba(0,0,0,0.03);
+    aspect-ratio: 4/3;
+  }
+  .l4l-featured-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .l4l-featured-card__placeholder {
+    width: 100%;
+    height: 100%;
+  }
+  .l4l-featured-card__ribbon {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    background: #1F3A5F;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 0.6rem;
+  }
+  .l4l-featured-card__body {
+    padding: 1.2rem;
+  }
+  .l4l-featured-card__badges {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .l4l-featured-card__badge {
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 0.2rem 0.7rem;
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--badge-color, #888) 18%, white);
+    color: var(--badge-color, #444);
+  }
+  .l4l-featured-card__badge--format {
+    background: rgba(0,0,0,0.06);
+    color: rgba(0,0,0,0.65);
+    --badge-color: none;
+  }
+  .l4l-featured-card__title {
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin: 0 0 0.3rem;
+  }
+  .l4l-featured-card__price {
+    font-size: 1.3rem;
+    opacity: 0.75;
+    margin: 0;
+  }
+  .l4l-featured__cta {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "L4L Featured curriculum",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Featured curriculum" },
+    { "type": "url", "id": "view_all_link", "label": "View all link" },
+    { "type": "text", "id": "view_all_label", "label": "View all label", "default": "View all resources" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "title_fallback", "label": "Title (if no product selected)" },
+        { "type": "text", "id": "ribbon", "label": "Ribbon text", "info": "e.g. Best seller, New, Bundle" },
+        { "type": "text", "id": "grade_label", "label": "Grade badge text", "default": "Grade 3" },
+        { "type": "color", "id": "grade_color", "label": "Grade badge color", "default": "#C98A3E" },
+        { "type": "text", "id": "format_label", "label": "Format badge text", "default": "Digital" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "L4L Featured curriculum",
+      "blocks": [
+        { "type": "product", "settings": { "ribbon": "Best seller", "grade_label": "Grade 3", "grade_color": "#C98A3E", "format_label": "Digital" } },
+        { "type": "product", "settings": { "ribbon": "New", "grade_label": "Grade 2", "grade_color": "#4A6FA5", "format_label": "Print" } },
+        { "type": "product", "settings": { "ribbon": "Bundle", "grade_label": "Grade 4", "grade_color": "#C15B4A", "format_label": "Both" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,25 @@
+{%- comment -%}
+  Renders the ribbon badge (Best seller / New / Bundle) over the product image.
+  Usage: {% render 'l4l-card-badge-ribbon', product: card_product %}
+{%- endcomment -%}
+
+{%- assign ribbon = product.metafields.curriculum.ribbon.value -%}
+{%- assign ribbon_color = product.metafields.curriculum.ribbon_color.value | default: '#0B2545' -%}
+{%- if ribbon != blank -%}
+  <span class="l4l-card-badge l4l-card-badge--ribbon" style="--ribbon-color: {{ ribbon_color }};">{{ ribbon }}</span>
+{%- endif -%}
+
+<style>
+  .l4l-card-badge--ribbon {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--ribbon-color, #0B2545);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.3rem 0.9rem;
+    border-radius: 0.7rem;
+    z-index: 2;
+  }
+</style>

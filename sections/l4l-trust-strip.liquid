@@ -1,0 +1,76 @@
+<div class="l4l-trust-strip color-{{ section.settings.color_scheme }}">
+  <div class="l4l-trust-strip__grid page-width">
+    {%- for block in section.blocks -%}
+      <div class="l4l-trust-strip__item" {{ block.shopify_attributes }}>
+        <span class="l4l-trust-strip__icon">{{ block.settings.icon }}</span>
+        <div>
+          <p class="l4l-trust-strip__title">{{ block.settings.title }}</p>
+          <p class="l4l-trust-strip__text">{{ block.settings.text }}</p>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .l4l-trust-strip {
+    padding: 2.5rem 0;
+  }
+  .l4l-trust-strip__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+  .l4l-trust-strip__item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .l4l-trust-strip__icon {
+    font-size: 2rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .l4l-trust-strip__title {
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin: 0 0 0.1rem;
+  }
+  .l4l-trust-strip__text {
+    font-size: 1.2rem;
+    opacity: 0.7;
+    margin: 0;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "L4L Trust strip",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-2" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "⬇" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Instant download" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Access your files immediately" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "L4L Trust strip",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "⬇", "title": "Instant download", "text": "Access your files immediately" } },
+        { "type": "item", "settings": { "icon": "🔒", "title": "Secure checkout", "text": "Safe and secure payments" } },
+        { "type": "item", "settings": { "icon": "🛡", "title": "Money back guarantee", "text": "Love it or get your money back" } },
+        { "type": "item", "settings": { "icon": "💬", "title": "Top rated support", "text": "We're here to help, anytime" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

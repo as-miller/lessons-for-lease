@@ -1,0 +1,532 @@
+{%- liquid
+  assign grade = product.metafields.curriculum.grade.value
+  assign subject = product.metafields.curriculum.subject.value
+  assign topic = product.metafields.curriculum.topic.value
+  assign pages = product.metafields.curriculum.pages.value
+  assign duration = product.metafields.curriculum.estimated_time.value
+  assign answer_key = product.metafields.curriculum.answer_key.value
+  assign resource_type = product.metafields.curriculum.resource_type.value
+-%}
+
+<div class="l4l-product page-width">
+  <div class="l4l-product__gallery">
+    {%- if product.featured_image != blank -%}
+      <div class="l4l-product__main-image">
+        <img id="l4l-main-image-tag" src="{{ product.featured_image | image_url: width: 900 }}" width="900" height="900" alt="{{ product.featured_image.alt | escape }}" loading="eager">
+      </div>
+      {%- if product.images.size > 1 -%}
+        <div class="l4l-product__thumbs">
+          {%- for image in product.images -%}
+            <button type="button" class="l4l-product__thumb" data-image-url="{{ image | image_url: width: 900 }}">
+              <img src="{{ image | image_url: width: 150 }}" width="150" height="150" alt="{{ image.alt | escape }}" loading="lazy">
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="l4l-product__main-image l4l-product__main-image--placeholder">
+        <span>Gallery</span>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="l4l-product__info">
+    <p class="l4l-product__eyebrow">
+      {%- if grade -%}{{ grade.name.value }}{%- endif -%}
+      {%- if grade and subject -%} <span class="l4l-product__eyebrow-dot">&bull;</span> {%- endif -%}
+      {%- if subject -%}{{ subject.name.value }}{%- endif -%}
+    </p>
+    <h1 class="l4l-product__title">{{ product.title }}</h1>
+
+    {%- comment %} Star rating placeholder - swap for your reviews app snippet once installed {% endcomment %}
+    {%- if section.settings.show_rating_placeholder -%}
+      <div class="l4l-product__rating-placeholder">
+        <span class="l4l-product__rating-note">{{ section.settings.rating_placeholder_text | default: 'Reviews coming soon' }}</span>
+      </div>
+    {%- endif -%}
+
+    {%- if product.description != blank -%}
+      <p class="l4l-product__teaser">{{ product.description | strip_html | truncatewords: 28 }}</p>
+    {%- endif -%}
+
+    <div class="l4l-product__divider"></div>
+
+    {%- if grade or subject or topic -%}
+      <div class="l4l-product__curriculum-row">
+        {%- if grade -%}
+          <div class="l4l-product__curriculum-item">
+            <span class="l4l-product__curriculum-icon l4l-product__curriculum-icon--navy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>
+            </span>
+            <div>
+              <p class="l4l-product__curriculum-label">Grade</p>
+              <p class="l4l-product__curriculum-value">{{ grade.name.value }}</p>
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if subject -%}
+          <div class="l4l-product__curriculum-item">
+            <span class="l4l-product__curriculum-icon l4l-product__curriculum-icon--amber">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H12v16H5.5C4.7 20 4 19.3 4 18.5v-13Z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H12v16h6.5c.8 0 1.5-.7 1.5-1.5v-13Z"/></svg>
+            </span>
+            <div>
+              <p class="l4l-product__curriculum-label">Subject</p>
+              <p class="l4l-product__curriculum-value">{{ subject.name.value }}</p>
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if topic -%}
+          <div class="l4l-product__curriculum-item">
+            <span class="l4l-product__curriculum-icon l4l-product__curriculum-icon--teal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-7"/></svg>
+            </span>
+            <div>
+              <p class="l4l-product__curriculum-label">Topic</p>
+              <p class="l4l-product__curriculum-value">{{ topic.name.value }}</p>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if pages or duration or answer_key != nil or resource_type -%}
+      <div class="l4l-product__details">
+        <p class="l4l-product__section-label">Resource details</p>
+        <div class="l4l-product__details-row">
+          {%- if pages -%}
+            <div class="l4l-product__detail-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5"/><path d="M6 3h8l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/></svg>
+              <div><p class="l4l-product__detail-value">{{ pages }}</p><p class="l4l-product__detail-label">Pages</p></div>
+            </div>
+          {%- endif -%}
+          {%- if duration -%}
+            <div class="l4l-product__detail-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              <div><p class="l4l-product__detail-value">{{ duration }}</p><p class="l4l-product__detail-label">Est. time</p></div>
+            </div>
+          {%- endif -%}
+          {%- if answer_key -%}
+            <div class="l4l-product__detail-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              <div><p class="l4l-product__detail-value">Included</p><p class="l4l-product__detail-label">Answer key</p></div>
+            </div>
+          {%- endif -%}
+          {%- if resource_type -%}
+            <div class="l4l-product__detail-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg>
+              <div><p class="l4l-product__detail-value">{{ resource_type }}</p><p class="l4l-product__detail-label">Resource type</p></div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <p class="l4l-product__price">{{ product.price | money }}</p>
+
+    {%- form 'product', product, class: 'l4l-product__form' -%}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="l4l-variant-id">
+
+      {%- if product.has_only_default_variant == false -%}
+        <div class="l4l-product__format">
+          <p class="l4l-product__section-label">Format</p>
+          <div class="l4l-product__format-options" role="radiogroup" aria-label="Format">
+            {%- for variant in product.variants -%}
+              <button
+                type="button"
+                class="l4l-product__format-pill{% if variant == product.selected_or_first_available_variant %} is-selected{% endif %}{% unless variant.available %} is-soldout{% endunless %}"
+                data-variant-id="{{ variant.id }}"
+                {% unless variant.available %}disabled{% endunless %}
+                role="radio"
+                aria-checked="{% if variant == product.selected_or_first_available_variant %}true{% else %}false{% endif %}"
+                onclick="document.querySelectorAll('.l4l-product__format-pill').forEach(function(p){p.classList.remove('is-selected');p.setAttribute('aria-checked','false');}); this.classList.add('is-selected'); this.setAttribute('aria-checked','true'); document.getElementById('l4l-variant-id').value = '{{ variant.id }}';"
+              >
+                {{ variant.title }}{% unless variant.available %} · Sold out{% endunless %}
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <button type="submit" class="l4l-product__add-to-cart" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+        {%- if product.selected_or_first_available_variant.available -%}
+          Add to cart
+        {%- else -%}
+          Sold out
+        {%- endif -%}
+      </button>
+    {%- endform -%}
+
+    {%- if product.selected_or_first_available_variant.available -%}
+      <form action="{{ routes.cart_add_url }}" method="post" class="l4l-product__buynow-form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" name="checkout" class="l4l-product__buy-now">Buy now</button>
+      </form>
+    {%- endif -%}
+
+    {%- assign preview_url = product.metafields.curriculum.preview_url.value -%}
+    {%- if preview_url != blank -%}
+      <a href="{{ preview_url }}" class="l4l-product__preview-link" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        Preview this resource
+      </a>
+    {%- endif -%}
+
+    <div class="l4l-product__notes">
+      <p class="l4l-product__note">{{ section.settings.shipping_note | default: 'Digital formats deliver instantly. Print formats ship in 2-3 business days.' }}</p>
+      <p class="l4l-product__note">{{ section.settings.license_note | default: 'Licensed for single classroom or family use.' }}</p>
+    </div>
+
+    <div class="l4l-product__trust">
+      <div class="l4l-product__trust-item">
+        <span class="l4l-product__trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span>
+        <p>Instant download</p>
+      </div>
+      <div class="l4l-product__trust-item">
+        <span class="l4l-product__trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <p>Standards aligned</p>
+      </div>
+      <div class="l4l-product__trust-item">
+        <span class="l4l-product__trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.5"/><path d="M15 13.5c2.5.3 4.5 2.3 4.5 4.5"/></svg></span>
+        <p>Classroom tested</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .l4l-product {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    padding: 3rem 0 5rem;
+  }
+  .l4l-product__main-image {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 1.2rem;
+    background: rgba(0,0,0,0.03);
+  }
+  .l4l-product__main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .l4l-product__main-image--placeholder {
+    aspect-ratio: 1/1;
+    background: rgba(0,0,0,0.04);
+    border-radius: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0,0,0,0.4);
+  }
+  .l4l-product__thumbs {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+  .l4l-product__thumb {
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 0.6rem;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    background: none;
+    width: 6rem;
+    height: 6rem;
+  }
+  .l4l-product__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .l4l-product__divider {
+    height: 1px;
+    background: rgba(0,0,0,0.08);
+    margin: 0 0 2rem;
+  }
+  .l4l-product__rating-placeholder {
+    margin-bottom: 0.8rem;
+  }
+  .l4l-product__rating-note {
+    font-size: 1.2rem;
+    color: rgba(0,0,0,0.4);
+    font-style: italic;
+  }
+  .l4l-product__teaser {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: rgba(0,0,0,0.65);
+    margin: 0.8rem 0 1.6rem;
+  }
+  .l4l-product__preview-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #0F6E56;
+    text-decoration: underline;
+    margin-bottom: 1.6rem;
+  }
+  .l4l-product__preview-link svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .l4l-product__notes {
+    margin-bottom: 1.6rem;
+  }
+  .l4l-product__note {
+    font-size: 1.2rem;
+    color: rgba(0,0,0,0.5);
+    margin: 0 0 0.3rem;
+    line-height: 1.5;
+  }
+  .l4l-product__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 1.2rem;
+    font-weight: 600;
+    opacity: 0.7;
+    margin: 0 0 0.6rem;
+  }
+  .l4l-product__eyebrow-dot {
+    display: inline-block;
+    margin: 0 0.4rem;
+    color: rgba(0,0,0,0.3);
+  }
+  .l4l-product__title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 2.2rem;
+  }
+  .l4l-product__curriculum-row {
+    display: flex;
+    gap: 2rem;
+    padding: 1.6rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    margin-bottom: 1.6rem;
+    flex-wrap: wrap;
+  }
+  .l4l-product__curriculum-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .l4l-product__curriculum-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .l4l-product__curriculum-icon svg {
+    width: 2rem;
+    height: 2rem;
+  }
+  .l4l-product__curriculum-icon--navy {
+    background: #E6F1FB;
+    color: #0C447C;
+  }
+  .l4l-product__curriculum-icon--amber {
+    background: #FAEEDA;
+    color: #854F0B;
+  }
+  .l4l-product__curriculum-icon--teal {
+    background: #E1F5EE;
+    color: #085041;
+  }
+  .l4l-product__curriculum-label {
+    font-size: 1.2rem;
+    opacity: 0.6;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .l4l-product__curriculum-value {
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin: 0.1rem 0 0;
+  }
+  .l4l-product__details {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .l4l-product__details-row {
+    display: flex;
+    gap: 2.2rem;
+    flex-wrap: wrap;
+  }
+  .l4l-product__detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    color: rgba(0,0,0,0.55);
+  }
+  .l4l-product__detail-item svg {
+    width: 2.4rem;
+    height: 2.4rem;
+    flex-shrink: 0;
+  }
+  .l4l-product__detail-value {
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin: 0;
+  }
+  .l4l-product__detail-label {
+    font-size: 1.3rem;
+    opacity: 0.6;
+    margin: 0;
+  }
+  .l4l-product__section-label {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    opacity: 0.6;
+    margin: 0 0 0.8rem;
+    display: block;
+  }
+  .l4l-product__format {
+    margin-bottom: 2rem;
+  }
+  .l4l-product__format-options {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .l4l-product__format-pill {
+    font-family: inherit;
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 0.9rem 2.2rem;
+    border-radius: 999px;
+    border: 1.5px solid rgba(0,0,0,0.15);
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+  .l4l-product__format-pill:hover:not(:disabled) {
+    border-color: #0F6E56;
+  }
+  .l4l-product__format-pill.is-selected {
+    background: #0F6E56;
+    border-color: #0F6E56;
+    color: #fff;
+  }
+  .l4l-product__format-pill.is-soldout {
+    color: rgba(0,0,0,0.35);
+    text-decoration: line-through;
+    cursor: not-allowed;
+    background: rgba(0,0,0,0.03);
+    border-color: rgba(0,0,0,0.1);
+  }
+  .l4l-product__add-to-cart {
+    display: block;
+    width: 100%;
+    padding: 1.4rem;
+    background: #0F6E56;
+    color: #fff;
+    border: none;
+    border-radius: 0.9rem;
+    font-family: inherit;
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+  .l4l-product__add-to-cart:disabled {
+    background: rgba(0,0,0,0.15);
+    color: rgba(0,0,0,0.4);
+    cursor: not-allowed;
+  }
+  .l4l-product__buynow-form {
+    margin: 0;
+  }
+  .l4l-product__buy-now {
+    display: block;
+    width: 100%;
+    padding: 1.4rem;
+    background: #fff;
+    color: #0F6E56;
+    border: 1.5px solid #0F6E56;
+    border-radius: 0.9rem;
+    font-family: inherit;
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 2rem;
+  }
+  .l4l-product__price {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin: 0 0 1.6rem;
+  }
+  .l4l-product__trust {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1.6rem 0.5rem;
+    background: rgba(15,110,86,0.04);
+    border-radius: 1rem;
+  }
+  .l4l-product__trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.6rem;
+  }
+  .l4l-product__trust-icon {
+    color: #0F6E56;
+  }
+  .l4l-product__trust-icon svg {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+  .l4l-product__trust-item p {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  @media screen and (max-width: 749px) {
+    .l4l-product {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.l4l-product__thumb').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var url = btn.getAttribute('data-image-url');
+      var mainImg = document.getElementById('l4l-main-image-tag');
+      if (mainImg && url) { mainImg.src = url; }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "L4L Product page",
+  "settings": [
+    { "type": "checkbox", "id": "show_rating_placeholder", "label": "Show rating placeholder", "default": false, "info": "Turn off once a reviews app is installed" },
+    { "type": "text", "id": "rating_placeholder_text", "label": "Rating placeholder text", "default": "Reviews coming soon" },
+    { "type": "text", "id": "shipping_note", "label": "Shipping/format note", "default": "Digital formats deliver instantly. Print formats ship in 2-3 business days." },
+    { "type": "text", "id": "license_note", "label": "License note", "default": "Licensed for single classroom or family use." }
+  ],
+  "presets": [
+    { "name": "L4L Product page" }
+  ]
+}
+{% endschema %}

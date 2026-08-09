@@ -1,0 +1,49 @@
+<div class="l4l-catalog-hero page-width">
+  <p class="l4l-catalog-hero__eyebrow">{{ section.settings.eyebrow | default: 'Georgia Standards of Excellence aligned' }}</p>
+  <h1 class="l4l-catalog-hero__heading">{{ section.settings.heading | default: collection.title | default: 'Browse all resources' }}</h1>
+  {%- if section.settings.subheading != blank -%}
+    <p class="l4l-catalog-hero__subheading">{{ section.settings.subheading }}</p>
+  {%- endif -%}
+</div>
+
+<style>
+  .l4l-catalog-hero {
+    padding: 3.5rem 0 2rem;
+    text-align: center;
+  }
+  .l4l-catalog-hero__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0F6E56;
+    margin: 0 0 0.8rem;
+  }
+  .l4l-catalog-hero__heading {
+    font-size: 3.4rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 1rem;
+  }
+  .l4l-catalog-hero__subheading {
+    font-size: 1.6rem;
+    color: rgba(0,0,0,0.6);
+    max-width: 56rem;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "L4L Catalog hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Georgia Standards of Excellence aligned" },
+    { "type": "text", "id": "heading", "label": "Heading (leave blank to use collection title)" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Browse math and ELA resources by grade, subject, and topic." }
+  ],
+  "presets": [
+    { "name": "L4L Catalog hero" }
+  ]
+}
+{% endschema %}

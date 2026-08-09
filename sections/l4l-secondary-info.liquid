@@ -1,0 +1,242 @@
+{%- liquid
+  assign preview_url = product.metafields.curriculum.preview_url.value
+  assign preview_images = product.metafields.curriculum.preview_images.value
+  assign standards = product.metafields.curriculum.standards.value
+-%}
+
+<div class="l4l-secondary page-width">
+  <div class="l4l-secondary__grid">
+
+    <div class="l4l-secondary__card">
+      <div class="l4l-secondary__card-head">
+        <span class="l4l-secondary__badge l4l-secondary__badge--amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </span>
+        <div>
+          <p class="l4l-secondary__title">{{ section.settings.preview_heading | default: 'Preview this resource' }}</p>
+          <p class="l4l-secondary__subtitle">See real pages before you buy</p>
+        </div>
+      </div>
+      <div class="l4l-secondary__card-body">
+        {%- if preview_images.size > 0 -%}
+          <div class="l4l-secondary__preview-grid">
+            {%- for image in preview_images limit: 4 -%}
+              <div class="l4l-secondary__preview-thumb">
+                <img src="{{ image | image_url: width: 200 }}" width="200" height="200" alt="{{ image.alt | escape }}" loading="lazy">
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- elsif product.images.size > 1 -%}
+          <div class="l4l-secondary__preview-grid">
+            {%- for image in product.images limit: 4 -%}
+              <div class="l4l-secondary__preview-thumb">
+                <img src="{{ image | image_url: width: 200 }}" width="200" height="200" alt="{{ image.alt | escape }}" loading="lazy">
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        {%- if preview_url != blank -%}
+          <a href="{{ preview_url }}" class="l4l-secondary__link-button" target="_blank" rel="noopener">
+            {{ section.settings.preview_button_label | default: 'View all preview pages' }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="l4l-secondary__card">
+      <div class="l4l-secondary__card-head">
+        <span class="l4l-secondary__badge l4l-secondary__badge--navy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.5" fill="currentColor"/></svg>
+        </span>
+        <div>
+          <p class="l4l-secondary__title">{{ section.settings.learn_heading | default: 'Students will learn' }}</p>
+          <p class="l4l-secondary__subtitle">Key learning outcomes</p>
+        </div>
+      </div>
+      <div class="l4l-secondary__card-body">
+        {%- if product.metafields.curriculum.learning_objectives.value != blank -%}
+          <div class="l4l-secondary__richtext-check">{{ product.metafields.curriculum.learning_objectives | metafield_tag }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="l4l-secondary__card">
+      <div class="l4l-secondary__card-head">
+        <span class="l4l-secondary__badge l4l-secondary__badge--teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg>
+        </span>
+        <div>
+          <p class="l4l-secondary__title">{{ section.settings.standards_heading | default: 'Standards aligned' }}</p>
+          <p class="l4l-secondary__subtitle">Georgia Standards of Excellence</p>
+        </div>
+      </div>
+      <div class="l4l-secondary__card-body">
+        {%- if standards.size > 0 -%}
+          <div class="l4l-secondary__standards-list">
+            {%- for standard in standards -%}
+              <span class="l4l-secondary__standard-pill">{{ standard }}</span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.standards_link_url != blank -%}
+          <a href="{{ section.settings.standards_link_url }}" class="l4l-secondary__text-link">
+            {{ section.settings.standards_link_label | default: 'View all standards alignment' }} &rarr;
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .l4l-secondary {
+    padding: 0 0 3rem;
+  }
+  .l4l-secondary__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .l4l-secondary__card {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 1.2rem;
+    padding: 2rem;
+    background: #fff;
+  }
+  .l4l-secondary__card-head {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    margin-bottom: 1.6rem;
+  }
+  .l4l-secondary__badge {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .l4l-secondary__badge svg {
+    width: 2rem;
+    height: 2rem;
+  }
+  .l4l-secondary__badge--amber {
+    background: #FAEEDA;
+    color: #854F0B;
+  }
+  .l4l-secondary__badge--navy {
+    background: #E6F1FB;
+    color: #0C447C;
+  }
+  .l4l-secondary__badge--teal {
+    background: #E1F5EE;
+    color: #085041;
+  }
+  .l4l-secondary__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  .l4l-secondary__subtitle {
+    font-size: 1.15rem;
+    color: rgba(0,0,0,0.45);
+    margin: 0.2rem 0 0;
+  }
+  .l4l-secondary__card-body {
+    padding: 0;
+  }
+  .l4l-secondary__richtext-check ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .l4l-secondary__richtext-check li {
+    padding: 1rem 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    font-size: 1.35rem;
+    line-height: 1.4;
+  }
+  .l4l-secondary__richtext-check p {
+    padding: 1rem 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    font-size: 1.35rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+  .l4l-secondary__preview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.4rem;
+  }
+  .l4l-secondary__preview-thumb {
+    aspect-ratio: 1 / 1;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    background: rgba(0,0,0,0.03);
+  }
+  .l4l-secondary__preview-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .l4l-secondary__link-button {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    background: transparent;
+    border: 1.5px solid #C98A3E;
+    color: #854F0B;
+    border-radius: 0.8rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .l4l-secondary__standards-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.4rem;
+  }
+  .l4l-secondary__standard-pill {
+    border: 1px solid #0F6E56;
+    color: #0F6E56;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 0.8rem;
+  }
+  .l4l-secondary__text-link {
+    display: inline-block;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #0F6E56;
+    text-decoration: none;
+  }
+  @media screen and (max-width: 989px) {
+    .l4l-secondary__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "L4L Preview and standards",
+  "settings": [
+    { "type": "text", "id": "preview_heading", "label": "Preview card heading", "default": "Preview this resource" },
+    { "type": "text", "id": "preview_button_label", "label": "Preview button label", "default": "View all preview pages" },
+    { "type": "text", "id": "learn_heading", "label": "Learning card heading", "default": "Students will learn" },
+    { "type": "text", "id": "standards_heading", "label": "Standards card heading", "default": "Standards aligned" },
+    { "type": "url", "id": "standards_link_url", "label": "Standards alignment page link" },
+    { "type": "text", "id": "standards_link_label", "label": "Standards link label", "default": "View all standards alignment" }
+  ],
+  "presets": [
+    { "name": "L4L Preview and standards" }
+  ]
+}
+{% endschema %}

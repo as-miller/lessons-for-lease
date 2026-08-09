@@ -1,75 +1,113 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "l4l_hero": {
+      "type": "l4l-hero",
       "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
+        "trust_1": {
+          "type": "trust_item",
+          "settings": { "icon": "✔", "title": "Standards-aligned", "text": "Built to meet state standards" }
         },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
+        "trust_2": {
+          "type": "trust_item",
+          "settings": { "icon": "⬇", "title": "Instant download", "text": "Get it now, use it today" }
+        },
+        "trust_3": {
+          "type": "trust_item",
+          "settings": { "icon": "♥", "title": "Loved by parents", "text": "Trusted by homeschool families" }
         }
       },
-      "block_order": [
-        "heading",
-        "button"
-      ],
+      "block_order": ["trust_1", "trust_2", "trust_3"],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "color_scheme": "scheme-1",
+        "eyebrow": "Standards-aligned curriculum",
+        "heading": "Engaging lessons. Confident learners.",
+        "subheading": "High-quality math and ELA resources for grades K-5, designed to save you time and help your students thrive.",
+        "button_1_label": "Shop math",
+        "button_2_label": "Shop ELA"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "l4l_grade_tiles": {
+      "type": "l4l-grade-tiles",
+      "blocks": {
+        "grade_k": { "type": "grade", "settings": { "number": "K", "title": "Kindergarten", "subtitle": "Building strong foundations", "color": "#7A9B76" } },
+        "grade_1": { "type": "grade", "settings": { "number": "1", "title": "Grade 1", "subtitle": "Building strong foundations", "color": "#3D8B8B" } },
+        "grade_2": { "type": "grade", "settings": { "number": "2", "title": "Grade 2", "subtitle": "Growing confident learners", "color": "#4A6FA5" } },
+        "grade_3": { "type": "grade", "settings": { "number": "3", "title": "Grade 3", "subtitle": "Mastering key concepts", "color": "#C98A3E" } },
+        "grade_4": { "type": "grade", "settings": { "number": "4", "title": "Grade 4", "subtitle": "Preparing for success", "color": "#C15B4A" } },
+        "grade_5": { "type": "grade", "settings": { "number": "5", "title": "Grade 5", "subtitle": "Building bright futures", "color": "#7D5A8C" } }
+      },
+      "block_order": ["grade_k", "grade_1", "grade_2", "grade_3", "grade_4", "grade_5"],
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "heading": "Browse by grade",
+        "subheading": "Curated lessons for every stage of your child's learning journey"
+      }
+    },
+    "l4l_subject_tiles": {
+      "type": "l4l-subject-tiles",
+      "blocks": {
+        "math": { "type": "subject", "settings": { "icon": "🔢", "title": "Math", "text": "Build confidence with engaging, standards-aligned math lessons", "color": "#0B2545" } },
+        "ela": { "type": "subject", "settings": { "icon": "📖", "title": "ELA", "text": "Help students grow in reading, writing, and grammar", "color": "#0F6E56" } }
+      },
+      "block_order": ["math", "ela"],
+      "settings": {
+        "heading": "Browse by subject"
+      }
+    },
+    "l4l_featured": {
+      "type": "l4l-featured",
+      "blocks": {
+        "featured_1": {
+          "type": "product",
+          "settings": { "ribbon": "Best seller", "grade_label": "Grade 3", "grade_color": "#C98A3E", "format_label": "Digital" }
+        },
+        "featured_2": {
+          "type": "product",
+          "settings": { "ribbon": "New", "grade_label": "Grade 2", "grade_color": "#4A6FA5", "format_label": "Digital" }
+        },
+        "featured_3": {
+          "type": "product",
+          "settings": { "ribbon": "New", "grade_label": "Grade 4", "grade_color": "#C15B4A", "format_label": "Digital" }
+        }
+      },
+      "block_order": ["featured_1", "featured_2", "featured_3"],
+      "settings": {
+        "heading": "Featured curriculum",
+        "view_all_label": "View all resources"
+      }
+    },
+    "l4l_approved": {
+      "type": "l4l-approved-banner",
+      "blocks": {
+        "item_1": { "type": "item", "settings": { "icon": "⭐", "label": "Quality you can trust" } },
+        "item_2": { "type": "item", "settings": { "icon": "⏱", "label": "Save time every week" } },
+        "item_3": { "type": "item", "settings": { "icon": "🎧", "label": "Support when you need it" } }
+      },
+      "block_order": ["item_1", "item_2", "item_3"],
+      "settings": {
+        "heading": "Teacher approved. Parent trusted.",
+        "text": "We're teachers too. Every resource is created with real classrooms in mind and designed to save you time while helping your students succeed."
+      }
+    },
+    "l4l_trust_strip": {
+      "type": "l4l-trust-strip",
+      "blocks": {
+        "trust_1": { "type": "item", "settings": { "icon": "⬇", "title": "Instant download", "text": "Access your files immediately" } },
+        "trust_2": { "type": "item", "settings": { "icon": "🔒", "title": "Secure checkout", "text": "Safe and secure payments" } },
+        "trust_3": { "type": "item", "settings": { "icon": "🛡", "title": "Money back guarantee", "text": "Love it or get your money back" } },
+        "trust_4": { "type": "item", "settings": { "icon": "💬", "title": "Top rated support", "text": "We're here to help, anytime" } }
+      },
+      "block_order": ["trust_1", "trust_2", "trust_3", "trust_4"],
+      "settings": {
+        "color_scheme": "scheme-2"
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "l4l_hero",
+    "l4l_grade_tiles",
+    "l4l_subject_tiles",
+    "l4l_featured",
+    "l4l_approved",
+    "l4l_trust_strip"
   ]
 }

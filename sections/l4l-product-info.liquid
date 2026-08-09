@@ -1,0 +1,261 @@
+{%- liquid
+  assign grade = product.metafields.curriculum.grade.value
+  assign subject = product.metafields.curriculum.subject.value
+  assign topic = product.metafields.curriculum.topic.value
+  assign pages = product.metafields.curriculum.pages.value
+  assign duration = product.metafields.curriculum.estimated_time.value
+  assign resource_type = product.metafields.curriculum.resource_type.value
+-%}
+
+<div class="l4l-info page-width">
+  <div class="l4l-info__grid">
+    <div class="l4l-info__card">
+      <div class="l4l-info__card-head">
+        <span class="l4l-info__badge l4l-info__badge--navy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5C4 3.7 4.7 3 5.5 3H12v18H5.5c-.8 0-1.5-.7-1.5-1.5v-15Z"/><path d="M20 4.5c0-.8-.7-1.5-1.5-1.5H12v18h6.5c.8 0 1.5-.7 1.5-1.5v-15Z"/></svg>
+        </span>
+        <div>
+          <p class="l4l-info__title">{{ section.settings.overview_heading | default: 'Curriculum overview' }}</p>
+          <p class="l4l-info__subtitle">{{ section.settings.overview_subtitle | default: 'Everything at a glance' }}</p>
+        </div>
+      </div>
+      <div class="l4l-info__card-body">
+        {%- if grade -%}
+        <div class="l4l-info__row">
+          <span class="l4l-info__row-label">Grade</span>
+          <span class="l4l-info__row-value">{{ grade.name.value }}</span>
+        </div>
+        {%- endif -%}
+        {%- if subject -%}
+        <div class="l4l-info__row">
+          <span class="l4l-info__row-label">Subject</span>
+          <span class="l4l-info__row-value">{{ subject.name.value }}</span>
+        </div>
+        {%- endif -%}
+        {%- if topic -%}
+        <div class="l4l-info__row">
+          <span class="l4l-info__row-label">Topic</span>
+          <span class="l4l-info__row-value">{{ topic.name.value }}</span>
+        </div>
+        {%- endif -%}
+        {%- if pages -%}
+        <div class="l4l-info__row">
+          <span class="l4l-info__row-label">Pages</span>
+          <span class="l4l-info__row-value">{{ pages }}</span>
+        </div>
+        {%- endif -%}
+        {%- if duration -%}
+        <div class="l4l-info__row">
+          <span class="l4l-info__row-label">Estimated time</span>
+          <span class="l4l-info__row-value">{{ duration }}</span>
+        </div>
+        {%- endif -%}
+        {%- if resource_type -%}
+        <div class="l4l-info__row">
+          <span class="l4l-info__row-label">Resource type</span>
+          <span class="l4l-info__row-value">{{ resource_type }}</span>
+        </div>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'overview_row' -%}
+            <div class="l4l-info__row" {{ block.shopify_attributes }}>
+              <span class="l4l-info__row-label">{{ block.settings.label }}</span>
+              <span class="l4l-info__row-value">{{ block.settings.value }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="l4l-info__card">
+      <div class="l4l-info__card-head">
+        <span class="l4l-info__badge l4l-info__badge--amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/></svg>
+        </span>
+        <div>
+          <p class="l4l-info__title">{{ section.settings.includes_heading | default: "What's included" }}</p>
+          <p class="l4l-info__subtitle">{{ section.settings.includes_subtitle | default: 'Ready to teach today' }}</p>
+        </div>
+      </div>
+      <div class="l4l-info__card-body">
+        {%- if product.metafields.curriculum.includes.value != blank -%}
+          <div class="l4l-info__richtext-check">{{ product.metafields.curriculum.includes | metafield_tag }}</div>
+        {%- endif -%}
+        {%- if section.settings.includes_footer != blank -%}
+          <div class="l4l-info__footer">{{ section.settings.includes_footer }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- assign quote = product.metafields.curriculum.testimonial_quote.value -%}
+  {%- if quote != blank -%}
+    <div class="l4l-info__testimonial">
+      <svg class="l4l-info__testimonial-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8c-2 0-3.5 1.5-3.5 3.5S5 15 7 15c-.3 2-1.7 3.3-4 3.7"/><path d="M16 8c-2 0-3.5 1.5-3.5 3.5S14 15 16 15c-.3 2-1.7 3.3-4 3.7"/></svg>
+      <div>
+        <p class="l4l-info__testimonial-quote">&ldquo;{{ quote }}&rdquo;</p>
+        {%- assign author = product.metafields.curriculum.testimonial_author.value -%}
+        {%- if author != blank -%}
+          <p class="l4l-info__testimonial-author">&mdash; {{ author }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .l4l-info {
+    padding: 3rem 0;
+  }
+  .l4l-info__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .l4l-info__card {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 1.2rem;
+    padding: 2rem;
+    background: #fff;
+  }
+  .l4l-info__card-head {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.6rem;
+  }
+  .l4l-info__badge {
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .l4l-info__badge svg {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+  .l4l-info__badge--navy {
+    background: #E6F1FB;
+    color: #0C447C;
+  }
+  .l4l-info__badge--amber {
+    background: #FAEEDA;
+    color: #854F0B;
+  }
+  .l4l-info__title {
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  .l4l-info__subtitle {
+    font-size: 1.2rem;
+    color: rgba(0,0,0,0.45);
+    margin: 0.2rem 0 0;
+  }
+  .l4l-info__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.1rem 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    font-size: 1.4rem;
+  }
+  .l4l-info__row-label {
+    color: rgba(0,0,0,0.55);
+  }
+  .l4l-info__row-value {
+    font-weight: 600;
+  }
+  .l4l-info__richtext-check ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .l4l-info__richtext-check li {
+    padding: 1.1rem 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    font-size: 1.4rem;
+    line-height: 1.4;
+  }
+  .l4l-info__richtext-check p {
+    padding: 1.1rem 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    font-size: 1.4rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+  .l4l-info__footer {
+    margin-top: 1.2rem;
+    padding: 1rem 1.2rem;
+    background: rgba(15,110,86,0.06);
+    color: #0F6E56;
+    border-radius: 0.7rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+  .l4l-info__testimonial {
+    display: flex;
+    gap: 1.6rem;
+    align-items: flex-start;
+    background: #FAEEDA;
+    border-radius: 1.2rem;
+    padding: 2.2rem 2.4rem;
+  }
+  .l4l-info__testimonial-icon {
+    width: 2.8rem;
+    height: 2.8rem;
+    color: #854F0B;
+    flex-shrink: 0;
+  }
+  .l4l-info__testimonial-quote {
+    font-family: Georgia, serif;
+    font-size: 1.7rem;
+    line-height: 1.6;
+    color: #412402;
+    margin: 0 0 0.8rem;
+  }
+  .l4l-info__testimonial-author {
+    font-size: 1.3rem;
+    color: #633806;
+    margin: 0;
+  }
+  @media screen and (max-width: 749px) {
+    .l4l-info__grid {
+      grid-template-columns: 1fr;
+    }
+    .l4l-info__testimonial {
+      flex-direction: column;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "L4L Product info",
+  "settings": [
+    { "type": "text", "id": "overview_heading", "label": "Overview card heading", "default": "Curriculum overview" },
+    { "type": "text", "id": "overview_subtitle", "label": "Overview card subtitle", "default": "Everything at a glance" },
+    { "type": "text", "id": "includes_heading", "label": "Includes card heading", "default": "What's included" },
+    { "type": "text", "id": "includes_subtitle", "label": "Includes card subtitle", "default": "Ready to teach today" },
+    { "type": "text", "id": "includes_footer", "label": "Includes footer note", "default": "Everything you need for a complete unit!" }
+  ],
+  "blocks": [
+    {
+      "type": "overview_row",
+      "name": "Extra overview row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Best for" },
+        { "type": "text", "id": "value", "label": "Value", "default": "Classroom & homeschool" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    { "name": "L4L Product info" }
+  ]
+}
+{% endschema %}

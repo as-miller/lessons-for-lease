@@ -1,0 +1,161 @@
+<div class="l4l-hero color-{{ section.settings.color_scheme }}">
+  <div class="l4l-hero__inner page-width">
+    <div class="l4l-hero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="l4l-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="l4l-hero__heading">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="l4l-hero__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      <div class="l4l-hero__buttons">
+        {%- if section.settings.button_1_label != blank -%}
+          <a href="{{ section.settings.button_1_link }}" class="button button--primary">{{ section.settings.button_1_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.button_2_label != blank -%}
+          <a href="{{ section.settings.button_2_link }}" class="button button--secondary">{{ section.settings.button_2_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+    {%- if section.settings.image != blank -%}
+      <div class="l4l-hero__image">
+        {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'eager', widths: '450,600,900' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="l4l-hero__trust page-width">
+      {%- for block in section.blocks -%}
+        <div class="l4l-hero__trust-item" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <span class="l4l-hero__trust-icon">{{ block.settings.icon }}</span>
+          {%- endif -%}
+          <div>
+            <p class="l4l-hero__trust-title">{{ block.settings.title }}</p>
+            <p class="l4l-hero__trust-text">{{ block.settings.text }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .l4l-hero__inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    padding: 4rem 0 3rem;
+  }
+  .l4l-hero__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgb(var(--color-foreground-accent, var(--color-foreground)));
+    margin: 0 0 0.75rem;
+  }
+  .l4l-hero__heading {
+    font-size: 4.4rem;
+    line-height: 1.1;
+    margin: 0 0 1.2rem;
+  }
+  .l4l-hero__subheading {
+    font-size: 1.7rem;
+    line-height: 1.5;
+    max-width: 46rem;
+    opacity: 0.85;
+    margin: 0 0 2rem;
+  }
+  .l4l-hero__buttons {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .l4l-hero__image img {
+    width: 100%;
+    height: auto;
+    border-radius: 1.2rem;
+    display: block;
+  }
+  .l4l-hero__trust {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 0 0 3rem;
+  }
+  .l4l-hero__trust-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .l4l-hero__trust-icon {
+    font-size: 2.2rem;
+    line-height: 1;
+  }
+  .l4l-hero__trust-title {
+    font-weight: 600;
+    margin: 0 0 0.2rem;
+    font-size: 1.4rem;
+  }
+  .l4l-hero__trust-text {
+    font-size: 1.3rem;
+    opacity: 0.75;
+    margin: 0;
+  }
+  @media screen and (max-width: 749px) {
+    .l4l-hero__inner {
+      grid-template-columns: 1fr;
+      padding: 2.5rem 0 2rem;
+    }
+    .l4l-hero__heading {
+      font-size: 3rem;
+    }
+    .l4l-hero__image {
+      order: -1;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "L4L Hero",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Standards-aligned curriculum" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Engaging lessons. Confident learners." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "High-quality math and ELA resources for grades K-5, designed to save you time and help your students thrive." },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "text", "id": "button_1_label", "label": "Primary button label", "default": "Shop math" },
+    { "type": "url", "id": "button_1_link", "label": "Primary button link" },
+    { "type": "text", "id": "button_2_label", "label": "Secondary button label", "default": "Shop ELA" },
+    { "type": "url", "id": "button_2_link", "label": "Secondary button link" }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji or short text)", "default": "✔" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Standards-aligned" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Built to meet state standards" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "L4L Hero",
+      "blocks": [
+        { "type": "trust_item", "settings": { "icon": "✔", "title": "Standards-aligned", "text": "Built to meet state standards" } },
+        { "type": "trust_item", "settings": { "icon": "⬇", "title": "Instant download", "text": "Get it now, use it today" } },
+        { "type": "trust_item", "settings": { "icon": "♥", "title": "Loved by parents", "text": "Trusted by homeschool families" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
