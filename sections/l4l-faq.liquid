@@ -1,0 +1,116 @@
+<div class="l4l-faq page-width">
+  <div class="l4l-faq__header">
+    <p class="l4l-faq__eyebrow">{{ section.settings.eyebrow | default: 'Questions' }}</p>
+    <h1 class="l4l-faq__heading">{{ section.settings.heading | default: 'Frequently asked questions' }}</h1>
+  </div>
+
+  <div class="l4l-faq__list">
+    {%- for block in section.blocks -%}
+      <details class="l4l-faq__item" {{ block.shopify_attributes }}>
+        <summary class="l4l-faq__question">
+          {{ block.settings.question }}
+          <svg class="l4l-faq__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="l4l-faq__answer">{{ block.settings.answer }}</div>
+      </details>
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .l4l-faq {
+    padding: 4rem 0 5rem;
+  }
+  .l4l-faq__header {
+    text-align: center;
+    max-width: 60rem;
+    margin: 0 auto 3.5rem;
+  }
+  .l4l-faq__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0F6E56;
+    margin: 0 0 1rem;
+  }
+  .l4l-faq__heading {
+    font-size: 3.4rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .l4l-faq__list {
+    max-width: 76rem;
+    margin: 0 auto;
+  }
+  .l4l-faq__item {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 1rem;
+    margin-bottom: 1.2rem;
+    overflow: hidden;
+  }
+  .l4l-faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
+    padding: 1.8rem 2.2rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+  .l4l-faq__question::-webkit-details-marker {
+    display: none;
+  }
+  .l4l-faq__chevron {
+    width: 1.8rem;
+    height: 1.8rem;
+    flex-shrink: 0;
+    color: #0F6E56;
+    transition: transform 0.15s ease;
+  }
+  .l4l-faq__item[open] .l4l-faq__chevron {
+    transform: rotate(180deg);
+  }
+  .l4l-faq__answer {
+    padding: 0 2.2rem 1.8rem;
+    font-size: 1.45rem;
+    line-height: 1.6;
+    opacity: 0.75;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "L4L FAQ page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Questions" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked questions" }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What's the difference between Print and Digital?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Digital resources are delivered instantly as a PDF you can print at home or use on a device. Print resources are physically shipped to you, ready to use out of the box.</p>" }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "L4L FAQ page",
+      "blocks": [
+        { "type": "faq_item", "settings": { "question": "What's the difference between Print and Digital?", "answer": "<p>Digital resources are delivered instantly as a PDF you can print at home or use on a device. Print resources are physically shipped to you, ready to use out of the box.</p>" } },
+        { "type": "faq_item", "settings": { "question": "Can I use one resource with multiple students?", "answer": "<p>Each purchase is licensed for a single classroom or family. If you're teaching multiple classrooms or need a school-wide license, reach out and we'll set that up for you.</p>" } },
+        { "type": "faq_item", "settings": { "question": "How do I know a resource matches my child's grade?", "answer": "<p>Every resource lists its exact grade, subject, and the specific standards it covers right on the product page, so you can check before you buy.</p>" } },
+        { "type": "faq_item", "settings": { "question": "What's your refund policy?", "answer": "<p>Since digital resources are delivered instantly, digital purchases are final sale. If something isn't right, reach out to us directly and we'll make it right.</p>" } },
+        { "type": "faq_item", "settings": { "question": "How long does Print shipping take?", "answer": "<p>Print orders typically ship within 2-3 business days.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

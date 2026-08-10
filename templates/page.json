@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -6,9 +15,62 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "l4l_faq_nbhUgj": {
+      "type": "l4l-faq",
+      "blocks": {
+        "faq_item_N9QJrF": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's the difference between Print and Digital?",
+            "answer": "<p>Digital resources are delivered instantly as a PDF you can print at home or use on a device. Print resources are physically shipped to you, ready to use out of the box.</p>"
+          }
+        },
+        "faq_item_3JBr3K": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I use one resource with multiple students?",
+            "answer": "<p>Each purchase is licensed for a single classroom or family. If you're teaching multiple classrooms or need a school-wide license, reach out and we'll set that up for you.</p>"
+          }
+        },
+        "faq_item_RPhXzK": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I know a resource matches my child's grade?",
+            "answer": "<p>Every resource lists its exact grade, subject, and the specific standards it covers right on the product page, so you can check before you buy.</p>"
+          }
+        },
+        "faq_item_JJaFtQ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's your refund policy?",
+            "answer": "<p>Since digital resources are delivered instantly, digital purchases are final sale. If something isn't right, reach out to us directly and we'll make it right.</p>"
+          }
+        },
+        "faq_item_RyrWxW": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does Print shipping take?",
+            "answer": "<p>Print orders typically ship within 2-3 business days.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_N9QJrF",
+        "faq_item_3JBr3K",
+        "faq_item_RPhXzK",
+        "faq_item_JJaFtQ",
+        "faq_item_RyrWxW"
+      ],
+      "name": "L4L FAQ page",
+      "settings": {
+        "eyebrow": "Questions",
+        "heading": "Frequently asked questions"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "l4l_faq_nbhUgj"
   ]
 }

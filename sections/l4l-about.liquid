@@ -1,0 +1,149 @@
+<div class="l4l-about page-width">
+  <div class="l4l-about__hero">
+    <p class="l4l-about__eyebrow">{{ section.settings.eyebrow | default: 'Our story' }}</p>
+    <h1 class="l4l-about__heading">{{ section.settings.heading | default: 'Made by educators, for families' }}</h1>
+    <p class="l4l-about__subheading">{{ section.settings.subheading | default: "We're teachers and specialists who believe every child deserves lessons that actually fit how they learn." }}</p>
+  </div>
+
+  <div class="l4l-about__story">
+    {{ section.settings.story_content }}
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="l4l-about__values">
+      {%- for block in section.blocks -%}
+        <div class="l4l-about__value" {{ block.shopify_attributes }}>
+          <span class="l4l-about__value-icon l4l-about__value-icon--{{ forloop.index | modulo: 3 }}">{{ block.settings.icon }}</span>
+          <p class="l4l-about__value-title">{{ block.settings.title }}</p>
+          <p class="l4l-about__value-text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.cta_label != blank -%}
+    <div class="l4l-about__cta">
+      <a href="{{ section.settings.cta_link | default: '/collections/all' }}" class="button button--primary">{{ section.settings.cta_label }}</a>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .l4l-about {
+    padding: 4rem 0 5rem;
+  }
+  .l4l-about__hero {
+    text-align: center;
+    max-width: 68rem;
+    margin: 0 auto 4rem;
+  }
+  .l4l-about__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0F6E56;
+    margin: 0 0 1rem;
+  }
+  .l4l-about__heading {
+    font-size: 3.8rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin: 0 0 1.4rem;
+  }
+  .l4l-about__subheading {
+    font-size: 1.7rem;
+    line-height: 1.55;
+    opacity: 0.7;
+    margin: 0;
+  }
+  .l4l-about__story {
+    max-width: 68rem;
+    margin: 0 auto 4.5rem;
+    font-size: 1.55rem;
+    line-height: 1.75;
+  }
+  .l4l-about__story p {
+    margin: 0 0 1.6rem;
+  }
+  .l4l-about__values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    max-width: 90rem;
+    margin: 0 auto 4rem;
+  }
+  .l4l-about__value {
+    text-align: center;
+  }
+  .l4l-about__value-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 5.2rem;
+    height: 5.2rem;
+    border-radius: 1.4rem;
+    font-size: 2.4rem;
+    margin: 0 0 1.2rem;
+  }
+  .l4l-about__value-icon--1 {
+    background: #E1F5EE;
+  }
+  .l4l-about__value-icon--2 {
+    background: #FAEEDA;
+  }
+  .l4l-about__value-icon--0 {
+    background: #E6F1FB;
+  }
+  .l4l-about__value-title {
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin: 0 0 0.5rem;
+  }
+  .l4l-about__value-text {
+    font-size: 1.4rem;
+    opacity: 0.65;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .l4l-about__cta {
+    text-align: center;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "L4L About page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our story" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Made by educators, for families" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "We're teachers and specialists who believe every child deserves lessons that actually fit how they learn." },
+    { "type": "richtext", "id": "story_content", "label": "Story content", "default": "<p>Lessons for Lease started with a simple frustration: too much curriculum out there is written for a classroom of thirty, not the one kid at your kitchen table. We wanted something different.</p><p>We're a team with real classroom experience and a background in child development, and we build every resource the way we'd want it built for our own kids: standards-aligned, genuinely engaging, and ready to use without hours of prep.</p>" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Browse our resources" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "🎓" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Teacher created" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Every resource is built by people who've actually stood in front of a classroom." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "L4L About page",
+      "blocks": [
+        { "type": "value", "settings": { "icon": "🎓", "title": "Teacher created", "text": "Every resource is built by people who've actually stood in front of a classroom." } },
+        { "type": "value", "settings": { "icon": "✔", "title": "Standards aligned", "text": "Every lesson maps to real state standards, so you always know it fits." } },
+        { "type": "value", "settings": { "icon": "❤️", "title": "Family first", "text": "Designed for the realities of teaching one kid, not thirty." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
