@@ -133,6 +133,17 @@
     "l4l_subject_tiles": {
       "type": "l4l-subject-tiles",
       "blocks": {
+        "subject_qUyqfY": {
+          "type": "subject",
+          "settings": {
+            "icon": "🔢",
+            "title": "Math",
+            "text": "Build confidence with engaging, standards-aligned math lessons",
+            "color": "#1f3a5f",
+            "link": "",
+            "coming_soon": false
+          }
+        },
         "math": {
           "type": "subject",
           "settings": {
@@ -181,7 +192,7 @@
           "type": "subject",
           "settings": {
             "icon": "💬",
-            "title": "SEL/Life Skills",
+            "title": "ACCESS",
             "text": "Build emotional regulation, communication, and independence skills",
             "color": "#7d5a8c",
             "link": "",
@@ -190,6 +201,7 @@
         }
       },
       "block_order": [
+        "subject_qUyqfY",
         "math",
         "ela",
         "science",
