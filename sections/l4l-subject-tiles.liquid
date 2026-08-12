@@ -8,14 +8,25 @@
   {%- endif -%}
   <div class="l4l-subjects__grid">
     {%- for block in section.blocks -%}
-      <a href="{{ block.settings.link }}" class="l4l-subject-card" style="--subject-color: {{ block.settings.color }};" {{ block.shopify_attributes }}>
-        <span class="l4l-subject-card__icon">{{ block.settings.icon }}</span>
-        <div>
-          <p class="l4l-subject-card__title">{{ block.settings.title }}</p>
-          <p class="l4l-subject-card__text">{{ block.settings.text }}</p>
-          <span class="l4l-subject-card__cta">Shop {{ block.settings.title }} →</span>
+      {%- if block.settings.coming_soon -%}
+        <div class="l4l-subject-card l4l-subject-card--soon" style="--subject-color: {{ block.settings.color }};" {{ block.shopify_attributes }}>
+          <span class="l4l-subject-card__badge">Coming soon</span>
+          <span class="l4l-subject-card__icon">{{ block.settings.icon }}</span>
+          <div>
+            <p class="l4l-subject-card__title">{{ block.settings.title }}</p>
+            <p class="l4l-subject-card__text">{{ block.settings.text }}</p>
+          </div>
         </div>
-      </a>
+      {%- else -%}
+        <a href="{{ block.settings.link }}" class="l4l-subject-card" style="--subject-color: {{ block.settings.color }};" {{ block.shopify_attributes }}>
+          <span class="l4l-subject-card__icon">{{ block.settings.icon }}</span>
+          <div>
+            <p class="l4l-subject-card__title">{{ block.settings.title }}</p>
+            <p class="l4l-subject-card__text">{{ block.settings.text }}</p>
+            <span class="l4l-subject-card__cta">Shop {{ block.settings.title }} →</span>
+          </div>
+        </a>
+      {%- endif -%}
     {%- endfor -%}
   </div>
 </div>
@@ -44,9 +55,19 @@
   }
   .l4l-subjects__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     text-align: left;
+  }
+  @media screen and (max-width: 989px) {
+    .l4l-subjects__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media screen and (max-width: 599px) {
+    .l4l-subjects__grid {
+      grid-template-columns: 1fr;
+    }
   }
   .l4l-subject-card {
     display: flex;
@@ -88,6 +109,22 @@
     font-weight: 600;
     color: var(--subject-color);
   }
+  .l4l-subject-card--soon {
+    position: relative;
+    opacity: 0.6;
+    cursor: default;
+  }
+  .l4l-subject-card__badge {
+    position: absolute;
+    top: -0.8rem;
+    right: 1.4rem;
+    background: #0B2545;
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+  }
 </style>
 
 {% schema %}
@@ -106,11 +143,12 @@
         { "type": "text", "id": "title", "label": "Title", "default": "Math" },
         { "type": "text", "id": "text", "label": "Description", "default": "Build confidence with engaging, standards-aligned math lessons" },
         { "type": "color", "id": "color", "label": "Subject color", "default": "#1F3A5F" },
-        { "type": "url", "id": "link", "label": "Collection link" }
+        { "type": "url", "id": "link", "label": "Collection link" },
+        { "type": "checkbox", "id": "coming_soon", "label": "Coming soon (disables link, shows badge)", "default": false }
       ]
     }
   ],
-  "max_blocks": 2,
+  "max_blocks": 6,
   "presets": [
     {
       "name": "L4L Subject tiles",

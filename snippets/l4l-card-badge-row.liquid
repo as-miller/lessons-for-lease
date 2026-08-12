@@ -7,25 +7,16 @@
   assign grade = product.metafields.curriculum.grade.value
   assign hide_grade = product.metafields.curriculum.hide_grade_badge.value
   assign hide_format = product.metafields.curriculum.hide_format_badge.value
-  assign formats = ''
-  for variant in product.variants
-    assign formats = formats | append: variant.title | append: ','
-  endfor
+  assign card_badge = product.metafields.curriculum.card_badge.value
 -%}
 
-{%- if grade and hide_grade != true or product.has_only_default_variant == false and hide_format != true -%}
+{%- if grade and hide_grade != true or card_badge != blank and hide_format != true -%}
   <div class="l4l-card-badge-row">
     {%- if grade and hide_grade != true -%}
       <span class="l4l-card-badge l4l-card-badge--grade" style="--badge-color: {{ grade.color.value | default: '#0F6E56' }};">{{ grade.name.value }}</span>
     {%- endif -%}
-    {%- if product.has_only_default_variant == false and hide_format != true -%}
-      {%- if formats contains 'Print' and formats contains 'Digital' -%}
-        <span class="l4l-card-badge l4l-card-badge--format">Print + Digital</span>
-      {%- elsif formats contains 'Digital' -%}
-        <span class="l4l-card-badge l4l-card-badge--format">Digital</span>
-      {%- elsif formats contains 'Print' -%}
-        <span class="l4l-card-badge l4l-card-badge--format">Print</span>
-      {%- endif -%}
+    {%- if card_badge != blank and hide_format != true -%}
+      <span class="l4l-card-badge l4l-card-badge--type">{{ card_badge }}</span>
     {%- endif -%}
   </div>
 {%- endif -%}
@@ -54,7 +45,7 @@
     background: color-mix(in srgb, var(--badge-color, #0F6E56) 16%, white);
     color: var(--badge-color, #0F6E56);
   }
-  .l4l-card-badge--format {
+  .l4l-card-badge--type {
     background: rgba(0,0,0,0.06);
     color: rgba(0,0,0,0.65);
   }
