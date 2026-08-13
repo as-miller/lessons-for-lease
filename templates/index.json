@@ -144,17 +144,6 @@
             "coming_soon": false
           }
         },
-        "math": {
-          "type": "subject",
-          "settings": {
-            "icon": "🔢",
-            "title": "Math",
-            "text": "Build confidence with engaging, standards-aligned math lessons",
-            "color": "#0b2545",
-            "link": "",
-            "coming_soon": false
-          }
-        },
         "ela": {
           "type": "subject",
           "settings": {
@@ -188,6 +177,17 @@
             "coming_soon": true
           }
         },
+        "math": {
+          "type": "subject",
+          "settings": {
+            "icon": "💬",
+            "title": "SEL/Social Skills",
+            "text": "Build emotional regulation, communication, and independence skills",
+            "color": "#7D5A8C",
+            "link": "",
+            "coming_soon": false
+          }
+        },
         "sel": {
           "type": "subject",
           "settings": {
@@ -202,10 +202,10 @@
       },
       "block_order": [
         "subject_qUyqfY",
-        "math",
         "ela",
         "science",
         "social_studies",
+        "math",
         "sel"
       ],
       "settings": {

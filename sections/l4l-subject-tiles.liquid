@@ -6,30 +6,108 @@
   {%- if section.settings.subheading != blank -%}
     <p class="l4l-subjects__subheading">{{ section.settings.subheading }}</p>
   {%- endif -%}
+
+  {%- assign subjects = shop.metaobjects.subject.values | sort: 'sort_order' -%}
+
   <div class="l4l-subjects__grid">
-    {%- for block in section.blocks -%}
-      {%- if block.settings.coming_soon -%}
-        <div class="l4l-subject-card l4l-subject-card--soon" style="--subject-color: {{ block.settings.color }};" {{ block.shopify_attributes }}>
+    {%- for subject in subjects -%}
+      {%- if subject.coming_soon.value -%}
+        <div class="l4l-subject-card l4l-subject-card--soon" style="--subject-color: {{ subject.color.value }};">
           <span class="l4l-subject-card__badge">Coming soon</span>
-          <span class="l4l-subject-card__icon">{{ block.settings.icon }}</span>
+          <span class="l4l-subject-card__icon">{{ subject.icon.value }}</span>
           <div>
-            <p class="l4l-subject-card__title">{{ block.settings.title }}</p>
-            <p class="l4l-subject-card__text">{{ block.settings.text }}</p>
+            <p class="l4l-subject-card__title">{{ subject.name.value }}</p>
+            <p class="l4l-subject-card__text">{{ subject.description.value }}</p>
           </div>
         </div>
       {%- else -%}
-        <a href="{{ block.settings.link }}" class="l4l-subject-card" style="--subject-color: {{ block.settings.color }};" {{ block.shopify_attributes }}>
-          <span class="l4l-subject-card__icon">{{ block.settings.icon }}</span>
+        <a href="{{ subject.link.value.url }}" class="l4l-subject-card" style="--subject-color: {{ subject.color.value }};">
+          <span class="l4l-subject-card__icon">{{ subject.icon.value }}</span>
           <div>
-            <p class="l4l-subject-card__title">{{ block.settings.title }}</p>
-            <p class="l4l-subject-card__text">{{ block.settings.text }}</p>
-            <span class="l4l-subject-card__cta">Shop {{ block.settings.title }} →</span>
+            <p class="l4l-subject-card__title">{{ subject.name.value }}</p>
+            <p class="l4l-subject-card__text">{{ subject.description.value }}</p>
+            <span class="l4l-subject-card__cta">Shop {{ subject.name.value }} &rarr;</span>
           </div>
         </a>
       {%- endif -%}
     {%- endfor -%}
   </div>
 </div>
+
+{%- assign has_coming_soon = false -%}
+{%- for subject in subjects -%}
+  {%- if subject.coming_soon.value -%}
+    {%- assign has_coming_soon = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if has_coming_soon -%}
+  <div class="l4l-notify-wrap">
+    <div class="l4l-notify page-width">
+      <p class="l4l-notify__heading">Want to know when new subjects launch?</p>
+      <p class="l4l-notify__subheading">Pick the ones you're interested in and we'll email you the moment they're ready.</p>
+
+      {%- form 'customer', id: 'notify-form', class: 'l4l-notify__form' -%}
+        <input type="hidden" name="contact[tags]" id="notify-tags-field" value="">
+        {%- if form.posted_successfully? -%}
+          <p class="l4l-notify__success">You're on the list! We'll be in touch when these launch.</p>
+          <div class="l4l-notify__checkboxes" data-notify-fallback style="display:none;">
+            {%- for subject in subjects -%}
+              {%- if subject.coming_soon.value -%}
+                <label class="l4l-notify__checkbox" style="--subject-color: {{ subject.color.value }};">
+                  <input type="checkbox" class="l4l-notify__checkbox-input" data-tag="notify-{{ subject.name.value | handleize }}">
+                  <span class="l4l-notify__checkbox-icon">{{ subject.icon.value }}</span>
+                  {{ subject.name.value }}
+                </label>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          <div class="l4l-notify__row" data-notify-fallback style="display:none;">
+            <input type="email" name="contact[email]" placeholder="Your email" required class="l4l-notify__input">
+            <button type="submit" class="l4l-notify__btn">Notify me</button>
+          </div>
+        {%- else -%}
+          <div class="l4l-notify__checkboxes">
+            {%- for subject in subjects -%}
+              {%- if subject.coming_soon.value -%}
+                <label class="l4l-notify__checkbox" style="--subject-color: {{ subject.color.value }};">
+                  <input type="checkbox" class="l4l-notify__checkbox-input" data-tag="notify-{{ subject.name.value | handleize }}">
+                  <span class="l4l-notify__checkbox-icon">{{ subject.icon.value }}</span>
+                  {{ subject.name.value }}
+                </label>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          <div class="l4l-notify__row">
+            <input type="email" name="contact[email]" placeholder="Your email" required class="l4l-notify__input">
+            <button type="submit" class="l4l-notify__btn">Notify me</button>
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var form = document.getElementById('notify-form');
+      if (!form) return;
+      form.addEventListener('submit', function () {
+        var checked = form.querySelectorAll('.l4l-notify__checkbox-input:checked');
+        var tags = Array.prototype.map.call(checked, function (el) { return el.getAttribute('data-tag'); });
+        document.getElementById('notify-tags-field').value = tags.join(',');
+      });
+
+      var successEl = form.querySelector('.l4l-notify__success');
+      if (successEl && window.location.hash !== '#notify-form') {
+        successEl.style.display = 'none';
+        form.querySelectorAll('[data-notify-fallback]').forEach(function (el) {
+          el.style.display = el.classList.contains('l4l-notify__row') ? 'flex' : '';
+        });
+      }
+    })();
+  </script>
+{%- endif -%}
 
 <style>
   .l4l-subjects {
@@ -112,7 +190,6 @@
   .l4l-subject-card--soon {
     position: relative;
     opacity: 0.6;
-    cursor: default;
   }
   .l4l-subject-card__badge {
     position: absolute;
@@ -125,6 +202,93 @@
     padding: 0.3rem 0.9rem;
     border-radius: 999px;
   }
+  .l4l-notify-wrap {
+    background: #FAFAF8;
+    margin-top: 3.5rem;
+    padding: 3rem 0;
+  }
+  .l4l-notify {
+    text-align: center;
+  }
+  .l4l-notify__heading {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+  }
+  .l4l-notify__subheading {
+    font-size: 1.4rem;
+    opacity: 0.7;
+    margin: 0 0 1.8rem;
+  }
+  .l4l-notify__checkboxes {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.6rem;
+  }
+  .l4l-notify__checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.4rem;
+    border: 1.5px solid rgba(0,0,0,0.12);
+    border-radius: 999px;
+    font-size: 1.35rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: #fff;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .l4l-notify__checkbox:has(.l4l-notify__checkbox-input:checked) {
+    border-color: var(--subject-color);
+    background: color-mix(in srgb, var(--subject-color) 10%, white);
+  }
+  .l4l-notify__checkbox-input {
+    accent-color: var(--subject-color);
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .l4l-notify__checkbox-icon {
+    font-size: 1.6rem;
+  }
+  .l4l-notify__row {
+    display: flex;
+    gap: 0.8rem;
+    max-width: 44rem;
+    margin: 0 auto;
+  }
+  .l4l-notify__input {
+    flex: 1;
+    min-width: 0;
+    padding: 1rem 1.4rem;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 0.8rem;
+    font-size: 1.4rem;
+    font-family: inherit;
+  }
+  .l4l-notify__btn {
+    padding: 1rem 1.8rem;
+    border: none;
+    border-radius: 0.8rem;
+    background: #0B2545;
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .l4l-notify__success {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0F6E56;
+    margin: 0;
+  }
+  @media screen and (max-width: 599px) {
+    .l4l-notify__row {
+      flex-direction: column;
+    }
+  }
 </style>
 
 {% schema %}
@@ -134,29 +298,8 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Browse by subject" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Explore our growing library of standards-aligned subjects" }
   ],
-  "blocks": [
-    {
-      "type": "subject",
-      "name": "Subject",
-      "settings": [
-        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "🔢" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Math" },
-        { "type": "text", "id": "text", "label": "Description", "default": "Build confidence with engaging, standards-aligned math lessons" },
-        { "type": "color", "id": "color", "label": "Subject color", "default": "#1F3A5F" },
-        { "type": "url", "id": "link", "label": "Collection link" },
-        { "type": "checkbox", "id": "coming_soon", "label": "Coming soon (disables link, shows badge)", "default": false }
-      ]
-    }
-  ],
-  "max_blocks": 6,
   "presets": [
-    {
-      "name": "L4L Subject tiles",
-      "blocks": [
-        { "type": "subject", "settings": { "icon": "🔢", "title": "Math", "text": "Build confidence with engaging, standards-aligned math lessons", "color": "#0B2545" } },
-        { "type": "subject", "settings": { "icon": "📖", "title": "ELA", "text": "Help students grow in reading, writing, and grammar", "color": "#0F6E56" } }
-      ]
-    }
+    { "name": "L4L Subject tiles" }
   ]
 }
 {% endschema %}

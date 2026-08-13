@@ -4,10 +4,6 @@
       "type": "l4l-main-product",
       "settings": {}
     },
-    "bundle-crosslink": {
-      "type": "l4l-bundle-crosslink",
-      "settings": {}
-    },
     "product-info": {
       "type": "l4l-product-info",
       "settings": {}
@@ -48,7 +44,6 @@
   },
   "order": [
     "main",
-    "bundle-crosslink",
     "product-info",
     "secondary-info",
     "approved-banner",

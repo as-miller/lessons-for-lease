@@ -1,0 +1,183 @@
+<div class="l4l-lead page-width">
+  <div class="l4l-lead__inner">
+    <div class="l4l-lead__visual">
+      {%- if section.settings.preview_image != blank -%}
+        <img src="{{ section.settings.preview_image | image_url: width: 700 }}" alt="{{ section.settings.preview_image.alt | escape }}" width="700" height="700" loading="lazy" class="l4l-lead__image">
+      {%- endif -%}
+    </div>
+
+    <div class="l4l-lead__content">
+      <p class="l4l-lead__eyebrow">{{ section.settings.eyebrow | default: 'Free resource' }}</p>
+      <h2 class="l4l-lead__heading">{{ section.settings.heading | default: 'Grab our free Math Visual Reference' }}</h2>
+      <p class="l4l-lead__text">{{ section.settings.text | default: 'A printable one-page reference covering perimeter, area, volume, fractions, and place value &mdash; free, no strings attached.' }}</p>
+
+      {%- form 'customer', id: 'lead-magnet-form', class: 'l4l-lead__form' -%}
+        <input type="hidden" name="contact[tags]" value="{{ section.settings.tag | default: 'lead-magnet' }}">
+        {%- if form.posted_successfully? -%}
+          <div class="l4l-lead__success">
+            <p class="l4l-lead__success-text">You're in! Click below to grab your download.</p>
+            <a href="{{ section.settings.file_url }}" class="l4l-lead__download-btn" download target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+              Download now
+            </a>
+          </div>
+          <div class="l4l-lead__row" data-lead-fallback-form style="display:none;">
+            <input type="email" name="contact[email]" placeholder="Your email" required class="l4l-lead__input">
+            <button type="submit" class="l4l-lead__btn">{{ section.settings.button_text | default: 'Send it to me' }}</button>
+          </div>
+        {%- else -%}
+          <div class="l4l-lead__row">
+            <input type="email" name="contact[email]" placeholder="Your email" required class="l4l-lead__input">
+            <button type="submit" class="l4l-lead__btn">{{ section.settings.button_text | default: 'Send it to me' }}</button>
+          </div>
+          <p class="l4l-lead__note">No spam &mdash; just the occasional update on new resources.</p>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var successEl = document.querySelector('#lead-magnet-form .l4l-lead__success');
+    var fallbackForm = document.querySelector('#lead-magnet-form [data-lead-fallback-form]');
+    if (!successEl) return;
+    if (window.location.hash !== '#lead-magnet-form') {
+      successEl.style.display = 'none';
+      if (fallbackForm) fallbackForm.style.display = 'flex';
+    }
+  })();
+</script>
+
+<style>
+  .l4l-lead {
+    padding: 5rem 0;
+  }
+  .l4l-lead__inner {
+    display: grid;
+    grid-template-columns: 0.85fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    background: #F0F7F5;
+    border-radius: 1.6rem;
+    padding: 3rem;
+  }
+  .l4l-lead__visual {
+    display: flex;
+    justify-content: center;
+  }
+  .l4l-lead__image {
+    width: 100%;
+    max-width: 32rem;
+    height: auto;
+    border-radius: 1rem;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  }
+  .l4l-lead__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0F6E56;
+    margin: 0 0 1rem;
+  }
+  .l4l-lead__heading {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 1.2rem;
+  }
+  .l4l-lead__text {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    opacity: 0.75;
+    margin: 0 0 2rem;
+  }
+  .l4l-lead__row {
+    display: flex;
+    gap: 0.8rem;
+    max-width: 44rem;
+  }
+  .l4l-lead__input {
+    flex: 1;
+    min-width: 0;
+    padding: 1.2rem 1.6rem;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 0.9rem;
+    font-size: 1.5rem;
+    font-family: inherit;
+  }
+  .l4l-lead__btn {
+    padding: 1.2rem 2rem;
+    border: none;
+    border-radius: 0.9rem;
+    background: #0B2545;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .l4l-lead__note {
+    font-size: 1.25rem;
+    opacity: 0.55;
+    margin: 1rem 0 0;
+  }
+  .l4l-lead__success {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+  }
+  .l4l-lead__success-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0F6E56;
+    margin: 0;
+  }
+  .l4l-lead__download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.1rem 2rem;
+    background: #0F6E56;
+    color: #fff;
+    border-radius: 0.9rem;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.4rem;
+  }
+  .l4l-lead__download-btn svg {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+  @media screen and (max-width: 749px) {
+    .l4l-lead__inner {
+      grid-template-columns: 1fr;
+      padding: 2rem;
+      text-align: center;
+    }
+    .l4l-lead__row {
+      flex-direction: column;
+      margin: 0 auto;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "L4L Lead magnet",
+  "settings": [
+    { "type": "image_picker", "id": "preview_image", "label": "Preview image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Free resource" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Grab our free Math Visual Reference" },
+    { "type": "textarea", "id": "text", "label": "Description", "default": "A printable one-page reference covering perimeter, area, volume, fractions, and place value — free, no strings attached." },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Send it to me" },
+    { "type": "url", "id": "file_url", "label": "File download URL", "info": "Upload your PDF under Content > Files, then paste its link here" },
+    { "type": "text", "id": "tag", "label": "Customer tag", "default": "lead-magnet", "info": "Used to segment this list in Shopify Messaging" }
+  ],
+  "presets": [
+    { "name": "L4L Lead magnet" }
+  ]
+}
+{% endschema %}
